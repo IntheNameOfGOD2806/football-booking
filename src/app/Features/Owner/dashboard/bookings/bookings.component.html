@@ -1,0 +1,317 @@
+<div class="bookings-container">
+  <h1 class="page-title">Bookings Management</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="All Bookings ({{ allBookings.length }})">
+          <div class="tab-content">
+            <table mat-table [dataSource]="allBookings" class="bookings-table">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.id }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fieldName">
+                <th mat-header-cell *matHeaderCellDef>Field</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.fieldName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="playerName">
+                <th mat-header-cell *matHeaderCellDef>Player</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.playerName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef>Contact</th>
+                <td mat-cell *matCellDef="let booking">
+                  <div class="contact-info">
+                    <span>{{ booking.playerEmail }}</span>
+                    <span class="phone">{{ booking.playerPhone }}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.date | date:'MMM d, y' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.startTime }} - {{ booking.endTime }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let booking">
+                  <strong>${{ booking.totalPrice }}</strong>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  <span class="status-badge" [style.background-color]="getStatusColor(booking.status)">
+                    {{ booking.status }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let booking">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'confirmed')" *ngIf="booking.status === 'pending'">
+                      <mat-icon>check_circle</mat-icon>
+                      <span>Confirm</span>
+                    </button>
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'completed')" *ngIf="booking.status === 'confirmed'">
+                      <mat-icon>done_all</mat-icon>
+                      <span>Mark Complete</span>
+                    </button>
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'cancelled')" *ngIf="booking.status !== 'cancelled' && booking.status !== 'completed'">
+                      <mat-icon>cancel</mat-icon>
+                      <span>Cancel</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Pending ({{ pendingBookings.length }})">
+          <div class="tab-content">
+            <table mat-table [dataSource]="pendingBookings" class="bookings-table">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.id }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fieldName">
+                <th mat-header-cell *matHeaderCellDef>Field</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.fieldName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="playerName">
+                <th mat-header-cell *matHeaderCellDef>Player</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.playerName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef>Contact</th>
+                <td mat-cell *matCellDef="let booking">
+                  <div class="contact-info">
+                    <span>{{ booking.playerEmail }}</span>
+                    <span class="phone">{{ booking.playerPhone }}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.date | date:'MMM d, y' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.startTime }} - {{ booking.endTime }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let booking">
+                  <strong>${{ booking.totalPrice }}</strong>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  <span class="status-badge" [style.background-color]="getStatusColor(booking.status)">
+                    {{ booking.status }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let booking">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'confirmed')">
+                      <mat-icon>check_circle</mat-icon>
+                      <span>Confirm</span>
+                    </button>
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'cancelled')">
+                      <mat-icon>cancel</mat-icon>
+                      <span>Cancel</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Confirmed ({{ confirmedBookings.length }})">
+          <div class="tab-content">
+            <table mat-table [dataSource]="confirmedBookings" class="bookings-table">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.id }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fieldName">
+                <th mat-header-cell *matHeaderCellDef>Field</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.fieldName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="playerName">
+                <th mat-header-cell *matHeaderCellDef>Player</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.playerName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef>Contact</th>
+                <td mat-cell *matCellDef="let booking">
+                  <div class="contact-info">
+                    <span>{{ booking.playerEmail }}</span>
+                    <span class="phone">{{ booking.playerPhone }}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.date | date:'MMM d, y' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.startTime }} - {{ booking.endTime }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let booking">
+                  <strong>${{ booking.totalPrice }}</strong>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  <span class="status-badge" [style.background-color]="getStatusColor(booking.status)">
+                    {{ booking.status }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let booking">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'completed')">
+                      <mat-icon>done_all</mat-icon>
+                      <span>Mark Complete</span>
+                    </button>
+                    <button mat-menu-item (click)="updateStatus(booking.id, 'cancelled')">
+                      <mat-icon>cancel</mat-icon>
+                      <span>Cancel</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Completed ({{ completedBookings.length }})">
+          <div class="tab-content">
+            <table mat-table [dataSource]="completedBookings" class="bookings-table">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.id }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fieldName">
+                <th mat-header-cell *matHeaderCellDef>Field</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.fieldName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="playerName">
+                <th mat-header-cell *matHeaderCellDef>Player</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.playerName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef>Contact</th>
+                <td mat-cell *matCellDef="let booking">
+                  <div class="contact-info">
+                    <span>{{ booking.playerEmail }}</span>
+                    <span class="phone">{{ booking.playerPhone }}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.date | date:'MMM d, y' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Time</th>
+                <td mat-cell *matCellDef="let booking">{{ booking.startTime }} - {{ booking.endTime }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let booking">
+                  <strong>${{ booking.totalPrice }}</strong>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let booking">
+                  <span class="status-badge" [style.background-color]="getStatusColor(booking.status)">
+                    {{ booking.status }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let booking">
+                  <mat-icon>check_circle</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

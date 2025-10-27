@@ -1,0 +1,126 @@
+<div class="form-container">
+  <div class="form-header">
+    <button mat-icon-button (click)="cancel()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="page-title">{{ isEditMode ? 'Edit Field' : 'Add New Field' }}</h1>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="fieldForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Field Name</mat-label>
+            <input matInput formControlName="name" placeholder="e.g., Greenfield Soccer Arena">
+            <mat-error *ngIf="fieldForm.get('name')?.hasError('required')">
+              Field name is required
+            </mat-error>
+            <mat-error *ngIf="fieldForm.get('name')?.hasError('minlength')">
+              Field name must be at least 3 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Field Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let type of fieldTypes" [value]="type.value">
+                {{ type.label }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="fieldForm.get('type')?.hasError('required')">
+              Field type is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="4" placeholder="Describe your field..."></textarea>
+            <mat-error *ngIf="fieldForm.get('description')?.hasError('required')">
+              Description is required
+            </mat-error>
+            <mat-error *ngIf="fieldForm.get('description')?.hasError('minlength')">
+              Description must be at least 10 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Price per Hour ($)</mat-label>
+            <input matInput type="number" formControlName="pricePerHour">
+            <mat-error *ngIf="fieldForm.get('pricePerHour')?.hasError('required')">
+              Price is required
+            </mat-error>
+            <mat-error *ngIf="fieldForm.get('pricePerHour')?.hasError('min')">
+              Price must be at least $1
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Capacity</mat-label>
+            <input matInput type="number" formControlName="capacity">
+            <mat-error *ngIf="fieldForm.get('capacity')?.hasError('required')">
+              Capacity is required
+            </mat-error>
+            <mat-error *ngIf="fieldForm.get('capacity')?.hasError('min')">
+              Capacity must be at least 1
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" placeholder="e.g., 123 Sports Ave, City">
+            <mat-error *ngIf="fieldForm.get('address')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Opening Time</mat-label>
+            <input matInput type="time" formControlName="startTime">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Closing Time</mat-label>
+            <input matInput type="time" formControlName="endTime">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Image URL</mat-label>
+            <input matInput formControlName="imageUrl" placeholder="https://...">
+            <mat-error *ngIf="fieldForm.get('imageUrl')?.hasError('required')">
+              Image URL is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="amenities-section full-width">
+            <label class="amenities-label">Amenities</label>
+            <mat-chip-listbox class="amenities-chips">
+              <mat-chip-option
+                *ngFor="let amenity of availableAmenities"
+                [selected]="selectedAmenities.includes(amenity)"
+                (click)="toggleAmenity(amenity)">
+                {{ amenity }}
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!fieldForm.valid">
+            {{ isEditMode ? 'Update Field' : 'Create Field' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,149 @@
+<div class="analytics-container">
+  <h1 class="page-title">Analytics & Reports</h1>
+
+  <div class="metrics-grid">
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-icon-wrapper green">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="metric-details">
+          <p class="metric-label">Total Revenue</p>
+          <h2 class="metric-value">${{ totalRevenue.toFixed(2) }}</h2>
+          <p class="metric-change positive">+12% from last month</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-icon-wrapper blue">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="metric-details">
+          <p class="metric-label">Total Bookings</p>
+          <h2 class="metric-value">{{ totalBookings }}</h2>
+          <p class="metric-change positive">+8% from last month</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-icon-wrapper orange">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="metric-details">
+          <p class="metric-label">Avg Booking Value</p>
+          <h2 class="metric-value">${{ avgBookingValue.toFixed(2) }}</h2>
+          <p class="metric-change positive">+5% from last month</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <mat-card-content>
+        <div class="metric-icon-wrapper purple">
+          <mat-icon>star</mat-icon>
+        </div>
+        <div class="metric-details">
+          <p class="metric-label">Avg Rating</p>
+          <h2 class="metric-value">4.5</h2>
+          <p class="metric-change positive">Excellent</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Field Performance</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="fieldStats" class="stats-table">
+          <ng-container matColumnDef="fieldName">
+            <th mat-header-cell *matHeaderCellDef>Field Name</th>
+            <td mat-cell *matCellDef="let stat">{{ stat.fieldName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalBookings">
+            <th mat-header-cell *matHeaderCellDef>Bookings</th>
+            <td mat-cell *matCellDef="let stat">
+              <div class="booking-count">
+                <mat-icon>event</mat-icon>
+                {{ stat.totalBookings }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="revenue">
+            <th mat-header-cell *matHeaderCellDef>Revenue</th>
+            <td mat-cell *matCellDef="let stat">
+              <strong class="revenue-amount">${{ stat.revenue.toFixed(2) }}</strong>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Recent Activity</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activity-list">
+          <div *ngFor="let booking of recentBookings" class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>event</mat-icon>
+            </div>
+            <div class="activity-details">
+              <p class="activity-title">{{ booking.fieldName }}</p>
+              <p class="activity-subtitle">{{ booking.playerName }} • {{ booking.date | date:'MMM d, y' }}</p>
+            </div>
+            <div class="activity-amount">
+              <span class="amount-value">${{ booking.totalPrice }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="insights-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>lightbulb</mat-icon>
+        Insights & Recommendations
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="insights-list">
+        <div class="insight-item">
+          <mat-icon class="insight-icon positive">trending_up</mat-icon>
+          <div class="insight-content">
+            <h4>Peak Booking Hours</h4>
+            <p>Most bookings occur between 6 PM - 9 PM. Consider dynamic pricing for peak hours.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <mat-icon class="insight-icon info">info</mat-icon>
+          <div class="insight-content">
+            <h4>Field Utilization</h4>
+            <p>Your fields have an average utilization rate of 68%. There's potential for growth during weekday mornings.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <mat-icon class="insight-icon warning">warning</mat-icon>
+          <div class="insight-content">
+            <h4>Maintenance Reminder</h4>
+            <p>Beach Volleyball Court is currently under maintenance. Update status when ready to accept bookings.</p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

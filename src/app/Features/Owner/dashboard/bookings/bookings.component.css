@@ -1,0 +1,72 @@
+.bookings-container {
+  max-width: 1400px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  color: #333;
+}
+
+mat-card-content {
+  padding: 0 !important;
+}
+
+.tab-content {
+  padding: 24px;
+  min-height: 400px;
+}
+
+.bookings-table {
+  width: 100%;
+
+  th {
+    font-weight: 600;
+    color: #555;
+  }
+
+  td, th {
+    padding: 16px 12px;
+  }
+
+  td {
+    color: #333;
+  }
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+
+  .phone {
+    color: #757575;
+    font-size: 13px;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .bookings-table {
+    font-size: 12px;
+
+    td, th {
+      padding: 12px 8px;
+    }
+  }
+
+  .tab-content {
+    padding: 16px;
+  }
+}

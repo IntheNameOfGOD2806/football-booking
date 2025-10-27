@@ -1,0 +1,105 @@
+<div class="overview-container">
+  <h1 class="page-title">Dashboard Overview</h1>
+
+  <div class="stats-grid" *ngIf="stats">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-icon-wrapper blue">
+          <mat-icon>sports_soccer</mat-icon>
+        </div>
+        <div class="stat-details">
+          <p class="stat-label">Total Fields</p>
+          <h2 class="stat-value">{{ stats.totalFields }}</h2>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-icon-wrapper orange">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="stat-details">
+          <p class="stat-label">Active Bookings</p>
+          <h2 class="stat-value">{{ stats.activeBookings }}</h2>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-icon-wrapper green">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="stat-details">
+          <p class="stat-label">Monthly Revenue</p>
+          <h2 class="stat-value">${{ stats.monthlyRevenue }}</h2>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-icon-wrapper purple">
+          <mat-icon>assessment</mat-icon>
+        </div>
+        <div class="stat-details">
+          <p class="stat-label">Total Bookings</p>
+          <h2 class="stat-value">{{ stats.totalBookings }}</h2>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="recent-bookings-card">
+    <mat-card-header>
+      <mat-card-title>Recent Bookings</mat-card-title>
+      <a mat-stroked-button
+   [routerLink]="['bookings']"
+   routerLinkActive="active-link">
+  <mat-icon>arrow_forward</mat-icon>
+  View All
+</a>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="recentBookings" class="bookings-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let booking">{{ booking.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fieldName">
+          <th mat-header-cell *matHeaderCellDef>Field</th>
+          <td mat-cell *matCellDef="let booking">{{ booking.fieldName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="playerName">
+          <th mat-header-cell *matHeaderCellDef>Player</th>
+          <td mat-cell *matCellDef="let booking">{{ booking.playerName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let booking">{{ booking.date | date:'MMM d, y' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Time</th>
+          <td mat-cell *matCellDef="let booking">{{ booking.startTime }} - {{ booking.endTime }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let booking">
+            <span class="status-badge" [style.background-color]="getStatusColor(booking.status)">
+              {{ booking.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

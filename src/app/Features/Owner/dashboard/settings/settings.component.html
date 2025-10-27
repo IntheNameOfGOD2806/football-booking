@@ -1,0 +1,214 @@
+<div class="settings-container">
+  <h1 class="page-title">Settings</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Profile">
+          <div class="tab-content">
+            <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+              <div class="avatar-section">
+                <div class="avatar">
+                  <mat-icon>account_circle</mat-icon>
+                </div>
+                <button mat-stroked-button type="button">
+                  <mat-icon>upload</mat-icon>
+                  Change Photo
+                </button>
+              </div>
+
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Full Name</mat-label>
+                  <input matInput formControlName="fullName">
+                  <mat-error *ngIf="profileForm.get('fullName')?.hasError('required')">
+                    Name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" formControlName="email">
+                  <mat-error *ngIf="profileForm.get('email')?.hasError('required')">
+                    Email is required
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+                    Invalid email format
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="phone">
+                  <mat-error *ngIf="profileForm.get('phone')?.hasError('required')">
+                    Phone is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Bio</mat-label>
+                  <textarea matInput formControlName="bio" rows="4"></textarea>
+                </mat-form-field>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Business Info">
+          <div class="tab-content">
+            <form [formGroup]="businessForm" (ngSubmit)="saveBusiness()">
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Business Name</mat-label>
+                  <input matInput formControlName="businessName">
+                  <mat-error *ngIf="businessForm.get('businessName')?.hasError('required')">
+                    Business name is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Business Address</mat-label>
+                  <input matInput formControlName="businessAddress">
+                  <mat-error *ngIf="businessForm.get('businessAddress')?.hasError('required')">
+                    Address is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Business Phone</mat-label>
+                  <input matInput formControlName="businessPhone">
+                  <mat-error *ngIf="businessForm.get('businessPhone')?.hasError('required')">
+                    Phone is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Tax ID</mat-label>
+                  <input matInput formControlName="taxId">
+                </mat-form-field>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!businessForm.valid">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Notifications">
+          <div class="tab-content">
+            <form [formGroup]="notificationForm" (ngSubmit)="saveNotifications()">
+              <div class="notification-section">
+                <h3 class="section-title">Email Notifications</h3>
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <h4>Booking Notifications</h4>
+                    <p>Get notified when you receive new booking requests</p>
+                  </div>
+                  <mat-slide-toggle formControlName="emailBookings"></mat-slide-toggle>
+                </div>
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <h4>Product Updates</h4>
+                    <p>Receive updates about new features and improvements</p>
+                  </div>
+                  <mat-slide-toggle formControlName="emailUpdates"></mat-slide-toggle>
+                </div>
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <h4>Marketing Emails</h4>
+                    <p>Receive promotional emails and special offers</p>
+                  </div>
+                  <mat-slide-toggle formControlName="emailMarketing"></mat-slide-toggle>
+                </div>
+              </div>
+
+              <div class="notification-section">
+                <h3 class="section-title">SMS Notifications</h3>
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <h4>Booking Alerts</h4>
+                    <p>Get SMS alerts for new bookings</p>
+                  </div>
+                  <mat-slide-toggle formControlName="smsBookings"></mat-slide-toggle>
+                </div>
+                <div class="notification-item">
+                  <div class="notification-info">
+                    <h4>Reminders</h4>
+                    <p>Receive SMS reminders for upcoming bookings</p>
+                  </div>
+                  <mat-slide-toggle formControlName="smsReminders"></mat-slide-toggle>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit">
+                  Save Preferences
+                </button>
+              </div>
+            </form>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Security">
+          <div class="tab-content">
+            <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+              <h3 class="section-title">Change Password</h3>
+              <div class="form-grid">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Current Password</mat-label>
+                  <input matInput type="password" formControlName="currentPassword">
+                  <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('required')">
+                    Current password is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>New Password</mat-label>
+                  <input matInput type="password" formControlName="newPassword">
+                  <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('required')">
+                    New password is required
+                  </mat-error>
+                  <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('minlength')">
+                    Password must be at least 8 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm New Password</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword">
+                  <mat-error *ngIf="passwordForm.get('confirmPassword')?.hasError('required')">
+                    Please confirm your password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!passwordForm.valid">
+                  Change Password
+                </button>
+              </div>
+            </form>
+
+            <div class="security-section">
+              <h3 class="section-title">Two-Factor Authentication</h3>
+              <p class="section-description">Add an extra layer of security to your account</p>
+              <button mat-stroked-button>
+                <mat-icon>security</mat-icon>
+                Enable 2FA
+              </button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

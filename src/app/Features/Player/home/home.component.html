@@ -1,0 +1,152 @@
+<div class="home-container">
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="logo-section">
+        <svg width="40" height="40" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+          <path d="M40 15C50 15 58 23 58 33C58 43 50 51 40 51C30 51 22 43 22 33C22 23 30 15 40 15Z" fill="white"/>
+          <path d="M40 29C45 29 49 33 49 38C49 43 45 47 40 47C35 47 31 43 31 38C31 33 35 29 40 29Z" fill="#22C55E"/>
+          <circle cx="40" cy="38" r="3" fill="white"/>
+        </svg>
+        <span class="logo-text">Football Booking</span>
+      </div>
+      <div class="user-section" *ngIf="currentUser$ | async as user">
+        <span class="welcome-text">Welcome, {{ user.name }}!</span>
+        <button class="logout-button" (click)="onLogout()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="16,17 21,12 16,7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Navigation -->
+  <div class="quick-nav">
+    <div class="nav-content">
+      <div class="nav-links">
+        <a href="#fields" class="nav-link active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+            <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          All Fields
+        </a>
+        <a href="#popular" class="nav-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Popular
+        </a>
+        <a href="#nearby" class="nav-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Nearby
+        </a>
+        <a href="#premium" class="nav-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L3.09 8.26L12 22L20.91 8.26L12 2Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Premium
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <div class="banner-content">
+      <div class="banner-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" fill="#22C55E" stroke="#16A34A" stroke-width="2"/>
+          <path d="M40 15C50 15 58 23 58 33C58 43 50 51 40 51C30 51 22 43 22 33C22 23 30 15 40 15Z" fill="white"/>
+          <path d="M40 29C45 29 49 33 49 38C49 43 45 47 40 47C35 47 31 43 31 38C31 33 35 29 40 29Z" fill="#22C55E"/>
+          <circle cx="40" cy="38" r="3" fill="white"/>
+        </svg>
+      </div>
+      <h1 class="banner-title">Choose your field and play!</h1>
+      <p class="banner-subtitle">Book premium football fields in your area and enjoy the beautiful game</p>
+    </div>
+  </div>
+
+  <!-- Fields Grid -->
+  <div class="fields-section" id="fields">
+    <div class="section-header">
+      <h2 class="section-title">Available Football Fields</h2>
+      <p class="section-subtitle">Find the perfect field for your next match</p>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-card" *ngFor="let field of footballFields">
+        <div class="card-image-container">
+          <img [src]="field.imageUrl" [alt]="field.name" class="card-image" loading="lazy">
+          <div class="card-overlay">
+            <div class="rating-badge">
+              <div class="stars">
+                <svg *ngFor="let filled of getStarArray(field.rating)" 
+                     [class.filled]="filled" 
+                     width="16" height="16" 
+                     viewBox="0 0 24 24" 
+                     fill="none" 
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+                        fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="rating-text">{{ field.rating }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="field-name">{{ field.name }}</h3>
+            <div class="price-tag">
+              <span class="currency">VND</span>
+              <span class="price">{{ field.pricePerHour }}</span>
+              <span class="period">/hour</span>
+            </div>
+          </div>
+
+          <div class="field-info">
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="info-text">{{ field.location }}</span>
+            </div>
+
+            <div class="info-item">
+              <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="info-text">{{ field.openHours }}</span>
+            </div>
+          </div>
+
+          <div class="features-list">
+            <span class="feature-tag" *ngFor="let feature of field.features">
+              {{ feature }}
+            </span>
+          </div>
+
+          <button class="book-button" (click)="onBookNow(field)">
+            <span class="button-text">Book Now</span>
+            <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

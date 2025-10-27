@@ -1,0 +1,293 @@
+.analytics-container {
+  max-width: 1400px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  color: #333;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  mat-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px !important;
+  }
+}
+
+.metric-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: white;
+  }
+
+  &.green {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+  }
+
+  &.blue {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  }
+
+  &.orange {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  }
+
+  &.purple {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+  }
+}
+
+.metric-details {
+  flex: 1;
+}
+
+.metric-label {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #757575;
+  font-weight: 500;
+}
+
+.metric-value {
+  margin: 0 0 4px 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+}
+
+.metric-change {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+
+  &.positive {
+    color: #4caf50;
+  }
+
+  &.negative {
+    color: #f44336;
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  mat-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  mat-card-content {
+    padding: 0 !important;
+  }
+}
+
+.stats-table {
+  width: 100%;
+
+  th {
+    font-weight: 600;
+    color: #555;
+  }
+
+  td, th {
+    padding: 16px 24px;
+  }
+
+  .booking-count {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #757575;
+    }
+  }
+
+  .revenue-amount {
+    color: #4caf50;
+    font-size: 16px;
+  }
+}
+
+.activity-list {
+  padding: 16px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: white;
+  }
+}
+
+.activity-details {
+  flex: 1;
+}
+
+.activity-title {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.activity-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #757575;
+}
+
+.activity-amount {
+  .amount-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4caf50;
+  }
+}
+
+.insights-card {
+  mat-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+
+      mat-icon {
+        color: #ff9800;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 24px !important;
+  }
+}
+
+.insights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.insight-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+}
+
+.insight-icon {
+  flex-shrink: 0;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+
+  &.positive {
+    color: #4caf50;
+  }
+
+  &.info {
+    color: #2196f3;
+  }
+
+  &.warning {
+    color: #ff9800;
+  }
+}
+
+.insight-content {
+  h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}

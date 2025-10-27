@@ -1,0 +1,81 @@
+<div class="fields-container">
+  <div class="header">
+    <h1 class="page-title">My Fields</h1>
+    <button mat-raised-button color="primary" routerLink="/dashboard/fields/add">
+      <mat-icon>add</mat-icon>
+      Add New Field
+    </button>
+  </div>
+
+  <div class="fields-grid">
+    <mat-card *ngFor="let field of fields" class="field-card">
+      <div class="field-image" [style.background-image]="'url(' + field.imageUrl + ')'">
+        <mat-chip [color]="getStatusColor(field.status)" selected>
+          {{ field.status }}
+        </mat-chip>
+      </div>
+
+      <mat-card-content>
+        <div class="field-header">
+          <div>
+            <h3 class="field-name">{{ field.name }}</h3>
+            <p class="field-type">
+              <mat-icon class="type-icon">{{ field.type === 'football' ? 'sports_soccer' : field.type === 'basketball' ? 'sports_basketball' : field.type === 'tennis' ? 'sports_tennis' : 'sports_volleyball' }}</mat-icon>
+              {{ field.type | titlecase }}
+            </p>
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/dashboard/fields/edit', field.id]">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deleteField(field.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <p class="field-description">{{ field.description }}</p>
+
+        <div class="field-info">
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ field.address }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ field.operatingHours.start }} - {{ field.operatingHours.end }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>group</mat-icon>
+            <span>Capacity: {{ field.capacity }}</span>
+          </div>
+        </div>
+
+        <div class="field-footer">
+          <div class="price">
+            <span class="price-label">Price:</span>
+            <span class="price-value">${{ field.pricePerHour }}/hour</span>
+          </div>
+          <button mat-stroked-button color="primary">
+            View Details
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="fields.length === 0" class="empty-state">
+    <mat-icon>sports_soccer</mat-icon>
+    <h3>No fields yet</h3>
+    <p>Add your first field to start receiving bookings</p>
+    <button mat-raised-button color="primary" routerLink="/dashboard/fields/add">
+      <mat-icon>add</mat-icon>
+      Add New Field
+    </button>
+  </div>
+</div>
