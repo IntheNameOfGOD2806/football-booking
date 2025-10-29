@@ -1,5 +1,4 @@
 <div class="booking-container">
-  <!-- Navigation Header -->
   <div class="nav-header">
     <div class="nav-content">
       <div class="logo-section">
@@ -25,7 +24,6 @@
     </div>
   </div>
 
-  <!-- Header -->
   <div class="booking-header">
     <button class="back-button" (click)="goBack()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,24 +35,23 @@
   </div>
 
   <div class="booking-content" *ngIf="selectedField">
-    <!-- Field Details Card -->
     <div class="field-details-card">
       <div class="field-image-container">
-        <img [src]="selectedField.imageUrl" [alt]="selectedField.name" class="field-image">
+        <img [src]="selectedField.url || 'assets/default-field-image.jpg'" [alt]="selectedField.name" class="field-image">
         <div class="field-overlay">
           <div class="rating-badge">
             <div class="stars">
-              <svg *ngFor="let filled of getStarArray(selectedField.rating)" 
-                   [class.filled]="filled" 
-                   width="16" height="16" 
-                   viewBox="0 0 24 24" 
-                   fill="none" 
-                   xmlns="http://www.w3.org/2000/svg">
+              <!-- <svg *ngFor="let filled of getStarArray(selectedField.rating || 4.8)" 
+                  [class.filled]="filled" 
+                  width="16" height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
                       fill="currentColor"/>
-              </svg>
+              </svg> -->
             </div>
-            <span class="rating-text">{{ selectedField.rating }}</span>
+            <!-- <span class="rating-text">{{ selectedField.rating || '4.8' }}</span> -->
           </div>
         </div>
       </div>
@@ -64,12 +61,12 @@
           <h2 class="field-name">{{ selectedField.name }}</h2>
           <div class="price-display">
             <span class="currency">VND</span>
-            <span class="price">{{ selectedField.pricePerHour }}</span>
+            <span class="price">{{ selectedField.price_per_hour | number:'1.0-0' }}</span>
             <span class="period">/hour</span>
           </div>
         </div>
 
-        <p class="field-description">{{ selectedField.description }}</p>
+        <!-- <p class="field-description">{{ selectedField.description || 'Description not available.' }}</p> -->
 
         <div class="field-details">
           <div class="detail-item">
@@ -79,7 +76,7 @@
             </svg>
             <div class="detail-content">
               <span class="detail-label">Location</span>
-              <span class="detail-value">{{ selectedField.location }}</span>
+              <span class="detail-value">{{ selectedField.address }}</span>
             </div>
           </div>
 
@@ -90,7 +87,7 @@
             </svg>
             <div class="detail-content">
               <span class="detail-label">Open Hours</span>
-              <span class="detail-value">{{ selectedField.openHours }}</span>
+              <!-- <span class="detail-value">{{ selectedField.openHours || '06:00 AM - 11:00 PM' }}</span> -->
             </div>
           </div>
         </div>
@@ -98,18 +95,17 @@
         <div class="features-section">
           <h3 class="features-title">Facilities & Features</h3>
           <div class="features-grid">
-            <span class="feature-tag" *ngFor="let feature of selectedField.features">
+            <!-- <span class="feature-tag" *ngFor="let feature of selectedField.features || ['Floodlights', 'Parking', 'Refreshments']">
               <svg class="feature-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               {{ feature }}
-            </span>
+            </span> -->
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Booking Form Card -->
     <div class="booking-form-card">
       <div class="form-header">
         <h3 class="form-title">Book This Field</h3>
@@ -117,7 +113,6 @@
       </div>
 
       <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="booking-form">
-        <!-- Date Selection -->
         <div class="form-group">
           <label for="date" class="form-label">
             <svg class="label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,7 +135,6 @@
           </div>
         </div>
 
-        <!-- Time Slot Selection -->
         <div class="form-group">
           <label for="timeSlot" class="form-label">
             <svg class="label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,21 +150,20 @@
             [class.error]="bookingForm.get('timeSlot')?.invalid && bookingForm.get('timeSlot')?.touched"
           >
             <option value="" disabled>Select a time slot</option>
-            <option 
-              *ngFor="let slot of timeSlots" 
-              [value]="slot.value" 
-              [disabled]="!slot.available"
-              [class.unavailable]="!slot.available"
-            >
-              {{ slot.label }} {{ !slot.available ? '(Unavailable)' : '' }}
-            </option>
+<option 
+  *ngFor="let slot of availableTimeframes" 
+  [value]="slot.id" 
+  
+  >
+  {{ getTimeSlotLabel(slot.id) }} 
+
+  </option>
           </select>
           <div class="error-message" *ngIf="bookingForm.get('timeSlot')?.invalid && bookingForm.get('timeSlot')?.touched">
             <span *ngIf="bookingForm.get('timeSlot')?.errors?.['required']">Please select a time slot</span>
           </div>
         </div>
 
-        <!-- Player Name -->
         <div class="form-group">
           <label for="playerName" class="form-label">
             <svg class="label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +186,6 @@
           </div>
         </div>
 
-        <!-- Phone Number -->
         <div class="form-group">
           <label for="phoneNumber" class="form-label">
             <svg class="label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -215,7 +207,6 @@
           </div>
         </div>
 
-        <!-- Special Requests -->
         <div class="form-group">
           <label for="specialRequests" class="form-label">
             <svg class="label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +227,6 @@
           ></textarea>
         </div>
 
-        <!-- Booking Summary -->
         <div class="booking-summary">
           <h4 class="summary-title">Booking Summary</h4>
           <div class="summary-item">
@@ -253,11 +243,10 @@
           </div>
           <div class="summary-item summary-total">
             <span class="summary-label">Total Price:</span>
-            <span class="summary-value">${{ selectedField.pricePerHour }}</span>
+            <span class="summary-value">VND {{ selectedField.price_per_hour | number:'1.0-0' }}</span>
           </div>
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="confirm-button" [disabled]="bookingForm.invalid">
           <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

@@ -44,7 +44,7 @@ export class LoginComponent {
       if (!ok) { this.errorMessage = 'Invalid email or password'; return; }
 
       const role = this.authService.getRole(); // 'owner' | 'player'
-      this.router.navigateByUrl(role === 'owner' ? '/owner/dashboard' : '/home'); // đi thẳng trang con
+      this.router.navigateByUrl(role === 'staff' ? '/owner/dashboard' : '/home'); // đi thẳng trang con
     },
     error: (err) => {
       this.isLoading = false;

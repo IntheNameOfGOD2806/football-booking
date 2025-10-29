@@ -22,9 +22,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/_redirects",
-              "src/.htaccess"
+              "src/assets"
             ],
             "styles": [
               "src/custom-theme.scss",
@@ -42,8 +40,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "8kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "outputHashing": "all"
@@ -97,8 +95,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

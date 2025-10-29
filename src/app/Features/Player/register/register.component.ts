@@ -67,17 +67,18 @@ export class RegisterComponent {
       this.errorMessage = '';
       
       const registerData: RegisterData = {
-        name: this.registerForm.value.name,
+        fullName: this.registerForm.value.name,
         email: this.registerForm.value.email,
-        phone: this.registerForm.value.phone,
-        password: this.registerForm.value.password
+        phoneNumber: this.registerForm.value.phone,
+        password: this.registerForm.value.password,
+        confirmPassword: this.registerForm.value.confirmPassword
       };
       
       this.authService.register(registerData).subscribe({
         next: (success) => {
           this.isLoading = false;
           if (success) {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/check-email']);
           } else {
             this.errorMessage = 'Registration failed. Please try again.';
           }

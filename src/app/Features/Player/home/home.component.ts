@@ -10,7 +10,7 @@ export interface FootballField {
   location: string;
   pricePerHour: number;
   openHours: string;
-  imageUrl: string;
+  url: string;
   rating: number;
   features: string[];
 }

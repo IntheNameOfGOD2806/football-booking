@@ -22,7 +22,7 @@ export class RoleGuard implements CanActivate {
     if (userRole === expected) return true;
 
     // Sai role → điều hướng về khu đúng
-    if (userRole === 'owner') this.router.navigateByUrl('/owner/dashboard');
+    if (userRole === 'staff') this.router.navigateByUrl('/owner/dashboard');
     else this.router.navigateByUrl('/home');
     return false;
   }
